@@ -1,5 +1,6 @@
 const https = require("https");
-const apikey = process.env.API_KEY
+const date = require("./date");
+const apikey = process.env.API_KEY;
 
 //const weatherData = require("./weatherData");
 /*
@@ -7,29 +8,36 @@ Get weather homepage
 */ 
 
 exports.homepage = async (req,res)=>{
-    const query = "London";
+    const day = date.getDate();
+    const time = date.getTime();
+    const query = "Lagos";
     const url = "https://api.openweathermap.org/data/2.5/weather?q="+ query +"&appid=" + apikey + "&units=metric";
     https.get(url, (response)=>{
         try{
             response.on("data", (data)=>{
                 const weatherData = JSON.parse(data);
+                const country = weatherData.sys.country;
                 const icon = weatherData.weather[0].icon;
-                const temp = Math.floor(weatherData.main.temp);
                 const weatherDesc = weatherData.weather[0].description;
-                const min_temp = Math.floor(weatherData.main.temp_min);
-                const max_temp = Math.floor(weatherData.main.temp_max);
+                const temp = Math.floor(weatherData.main.temp);
+                const secondTemp = Math.floor(weatherData.main.feels_like);
+                
                 const humidity = weatherData.main.humidity;
                 const wind = Math.floor(weatherData.wind.speed);
+                const visibility = weatherData.visibility / 1000;
                 const imgUrl = "http://openweathermap.org/img/wn/"+ icon +"@2x.png";
                 res.render("index", {
+                    city: query,
+                    Country: country,
+                    Desc: weatherDesc,
                     Temp: temp, 
-                    Desc: weatherDesc, 
-                    min:min_temp,
-                    max: max_temp,
+                    feels_like: secondTemp,
                     hum: humidity,
                     win: wind,
+                    visi: visibility,
                     img: imgUrl,
-                    city: query
+                    Day: day,
+                    Time: time
                 });
             });
         } catch(error){
@@ -42,29 +50,36 @@ exports.homepage = async (req,res)=>{
 }
 
 exports.city = async(req, res)=>{
-    const postQuery = req.body.city;
+    const postQuery = req.body.search;
+    const day = date.getDate();
+    const time = date.getTime();
     const url = "https://api.openweathermap.org/data/2.5/weather?q="+ postQuery +"&appid=" + apikey + "&units=metric";
     https.get(url, (response)=>{
         try{
             response.on("data", (data)=>{
                 const weatherData = JSON.parse(data);
+                const country = weatherData.sys.country;
                 const icon = weatherData.weather[0].icon;
-                const temp = Math.floor(weatherData.main.temp);
                 const weatherDesc = weatherData.weather[0].description;
-                const min_temp = Math.floor(weatherData.main.temp_min);
-                const max_temp = Math.floor(weatherData.main.temp_max);
+                const temp = Math.floor(weatherData.main.temp);
+                const secondTemp = Math.floor(weatherData.main.feels_like);
+                
                 const humidity = weatherData.main.humidity;
                 const wind = Math.floor(weatherData.wind.speed);
+                const visibility = weatherData.visibility;
                 const imgUrl = "http://openweathermap.org/img/wn/"+ icon +"@2x.png";
                 res.render("index", {
+                    city: postQuery,
+                    Country: country,
+                    Desc: weatherDesc,
                     Temp: temp, 
-                    Desc: weatherDesc, 
-                    min:min_temp,
-                    max: max_temp,
+                    feels_like: secondTemp,
                     hum: humidity,
                     win: wind,
-                    img: imgUrl,
-                    city: postQuery
+                    visi: visibility,
+                    img: imgUrl, 
+                    Day: day,
+                    Time: time
                 });
             });
         } catch(error){

@@ -1,28 +1,84 @@
+
+
+<!-- Diff -->
+
 <div class="container">
-    <div class="form">
-        <form action="/" method="post">
-            <input type="search" name="city" placeholder="Enter a city...">
-            <button type="submit"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
-        </form>
-    </div>
-    <div class="title">
-        <p>
-            <i class="fa-solid fa-location-dot"></i> 
-                <span><%= city %> </span> <%#  %> 
-        </p>
-    </div>
-    <div class="temp">
-        <img src="<%= img %>"  alt="icon" class="icon">
-        <h2 class="main-temp"> <%= Temp %>°</h2>
-    </div>
-    <div class="condition">
-        <p class="desc"><%= Desc %> </p>
-        <p>min: <%= min %> °</p>
-        <p>max: <%= max %> °</p>
-    </div>
-    
-    <div class="wind">
-        <p class="humidity">Humidity: <%= hum %>%</p>
-        <p class="wind">Wind: <%= win %>m/s</p>
+    <div class="main-grid">
+        <section class="data">
+            <div class="city">
+                <i class="fas fa-location"></i>
+                <h3 class="city">
+
+                    
+                    <%= city %>, <%= Country %>
+                </h3>
+            </div>
+
+            <div class="weather">
+                <img src="<%= img %>" alt="weatherimage" class="image" style="display: inline-block; max-width: 100%; overflow: hidden; position: relative; box-sizing: border-box; margin: 0px;">
+                <p class="description"><%= Desc %></p>
+            </div>
+
+            <div class="temp">
+                <h2 class="main-temp"><%= Temp %>°C</h2>
+                <div class="feel-temp"> <p>Feels Like: <%= feels_like %>°C </p></div>
+            </div>
+            
+        </section>
+
+        <section class="extra-data">
+            <div class="date-form">
+                <div class="date"><h4> <%= Day %> , <%= Time %> </h4></div>
+                <div class="form">
+                    <form action="/" method="post">
+                        <input type="search" name="search" id="" class="search" placeholder="Search a city...">
+                    </form>
+                </div>
+            </div>
+            <div class="inner-grid">
+                <div class="box">    
+                    <p class="description">Humidity</p>
+                    <div class="content">
+                        <div class="img">
+                            <img src="/img/humidity.png" alt="Humidity" style="max-width: 100%; display: block; margin: 0px; border: none; padding: 0px;">
+                        </div>
+                        <div class="return-value">
+                            <h4 class="bold"><%= hum %></h4>
+                            <p class="description">%</p>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="box">
+                    <p class="description">Wind Speed</p>
+                    <div class="content">
+                        <div class="img">
+                            <img src="/img/wind.png" alt="Wind" style="max-width: 100%; display: block; margin: 0px; border: none; padding: 0px;">
+                        </div>
+                        <div class="return-value">
+                            <h4 class="bold"><%= win %></h4>
+                            <p class="description">m/s</p>
+                        </div>
+                    </div>   
+                </div>
+                <div class="box"> 
+                    <p class="description">Visibility</p>
+                    <div class="content">
+                        <div class="img">
+                            <img src="/img/visibility.png" alt="Visibility" style="max-width: 100%; display: block; margin: 0px; border: none; padding: 0px;">
+                        </div>
+                        <div class="return-value">
+                            <h4 class="bold"> <%= visi %>  </h4>
+                            <p class="description">km</p>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <div class="system">
+                <p class="description" style="color: green;">Metric System:</p>
+                <p>Imperial System</p>
+            </div>
+        </section>
     </div>
 </div>
